@@ -40,28 +40,18 @@ int main(void)
 			if (i % 4 == 0) //COMBO-Line
 			{
 				aux = tokens[i];
-				seperatorLocation = aux.find('@');
-				auxCar = aux.substr(1, (seperatorLocation - 1)); //nice "warning", VS
-				auxLength = aux.length() - auxCar.length();
+				seperatorLocation = (int)aux.find('@');
+				auxCar = aux.substr(1, (seperatorLocation - (size_t)1)); //nice "warning", VS
+				auxLength = (int)aux.length() - (int)auxCar.length();
 				auxLength-= 3;
-				auxTrack = aux.substr((seperatorLocation + 1), auxLength);
-				if (std::find(Cars.begin(), Cars.end(), auxCar) != Cars.end()) 
-				{
-					//std::cout << "Car already in!" << std::endl;
-				}
-				else 
+				auxTrack = aux.substr((seperatorLocation + (size_t)1), auxLength);
+				if (!(std::find(Cars.begin(), Cars.end(), auxCar) != Cars.end())) 
 				{
 					Cars.push_back(auxCar);
-					//std::cout << "Car added!" << std::endl;
 				}
-				if (std::find(Tracks.begin(), Tracks.end(), auxTrack) != Tracks.end())
-				{
-					//std::cout << "Track already in!" << std::endl;
-				}
-				else
+				if (!(std::find(Tracks.begin(), Tracks.end(), auxTrack) != Tracks.end()))
 				{
 					Tracks.push_back(auxTrack);
-					//std::cout << "Track added!" << std::endl;
 				}
 				Combos.push_back(std::make_pair(auxCar, auxTrack));
 
@@ -73,8 +63,6 @@ int main(void)
 			{
 				aux = tokens[i];
 				Laptimes[Combos[Combos.size()-1]] = stoi(aux.substr(5));
-
-				//std::cout << Laptimes[Combos[Combos.size()-1]] << std::endl;
 			}
 		}
 
@@ -84,20 +72,14 @@ int main(void)
 		{
 			for (auto track : Tracks)
 			{
-				if (std::find(Combos.begin(), Combos.end(), std::make_pair(car, track)) != Combos.end())
-				{
-					//std::cout << "Combo exists" << std::endl;
-				}
-				else
+				if (!(std::find(Combos.begin(), Combos.end(), std::make_pair(car, track)) != Combos.end()))
 				{
 					EmptyCombos.push_back(std::make_pair(car, track));
 				}
-				//std::cout << "Track: " << track << std::endl;
-				//std::cout << "Car: " << car << std::endl;
 			}
 			std::cout << car << std::endl;
 		}
-		int Comby = Combos.size();
+		int Comby = (int)Combos.size();
 		for (auto combo : EmptyCombos)
 		{
 			Combos.push_back(combo);
@@ -121,16 +103,6 @@ int main(void)
 				output << Laptimes[Combos[i * Tracks.size()+j]] << ',';
 			}
 			output << std::endl;
-		}
-		//for (unsigned int i = 0; i < Combos.size(); i++)
-		{
-			//std::cout << Combos[i].first << std::endl << Combos[i].second << std::endl;
-			//std::cout << Laptimes[Combos[i]] << std::endl;
-		}
-
-		//for (auto combo : Combos)
-		{
-			//std::cout << combo.first << std::endl << combo.second << std::endl;
 		}
 
 		std::vector<std::pair<std::string, std::string>> out;
